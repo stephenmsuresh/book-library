@@ -14,8 +14,8 @@ Book.prototype.toggleRead = function () {
 let bookList = document.querySelector('.books');
 let library = [];
 
-library.push(new Book("Behave", 'Robert Sapolsky', '634', true));
-library.push(new Book("Dummy Book", 'Dummy Author', '999', false));
+library.push(new Book("Anna Karenina", 'Leo Tolstoy', 864, true));
+library.push(new Book("The Hobbit", 'J.R.R Tolkien', 300, false));
 function populateLibrary() {
     library.forEach((book) => {
         addBookCard(book);
@@ -115,12 +115,21 @@ bookForm.addEventListener('submit', (e) => {
 
 function addBook(e) {
     let title = document.querySelector('#book-title').value;
+    let index = library.findIndex((book) => {
+        return (book.title === title);
+    });
+    if (index != -1) {
+        alert("Book Already In Library!")
+        return;
+    }
+
     let author = document.querySelector('#book-author').value;
     let pages = document.querySelector('#book-pages').value;
     let read = document.querySelector('#book-read').checked;
     let book = new Book(title, author, pages, read);
     addBookCard(book);
     library.push(book);
+    hideForm();
 }
 
 //form submission
@@ -131,6 +140,7 @@ let themeToggle = document.querySelector("#toggle-theme");
 themeToggle.addEventListener('click', (e) => {
     toggleTheme(e);
 })
+
 function toggleTheme(e) {
     let root = document.documentElement;
     if (getComputedStyle(root).getPropertyValue('--theme') === 'light') {
